@@ -137,6 +137,7 @@ std::ostream& operator << ( std::ostream& os, const P4& p4)
                 case (int)EMPTY:
                     os << " ";
                     break;
+                default: os << "k";
             }
             os << "|";          
         }
