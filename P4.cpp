@@ -120,7 +120,7 @@ void P4::test()
 
 std::ostream& operator << ( std::ostream& os, const P4& p4)
 {
-    os << "\n+-+-+-+-+-+-+-+-\n+";
+    os << "\n+-+-+-+-+-+-+-+\n";
     for(size_t j = HEIGHT; j >= 1; --j)
      {
         os << "|";
@@ -140,7 +140,9 @@ std::ostream& operator << ( std::ostream& os, const P4& p4)
             }
             os << "|";          
         }
-        os << "\n+-+-+-+-+-+-+-+-\n+";
+        os << "\n+-+-+-+-+-+-+-+\n";
+       
      }
+     os << " 0 1 2 3 4 5 6\n";
     return os;
 }
