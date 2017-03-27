@@ -3,9 +3,9 @@
 
 void P4::reset()
 {
-    for(size_t i = 0; i < WIDTH; ++i)
+    for(size_t i = 0; i < HEIGHT; ++i)
     {
-        for(size_t j = 0; j < HEIGHT; ++j)
+        for(size_t j = 0; j < WIDTH; ++j)
         {
             board[i][j] = EMPTY;
         }
@@ -15,12 +15,12 @@ void P4::reset()
 
  P4::P4()
  {
-     for(size_t i = 0; i < WIDTH; ++i)
+     for(size_t j = HEIGHT; j <= 0; --j)
      {
-         maxJetonPerColumn[i] = 0; 
-        for(size_t j = 0; j < HEIGHT; ++j)
+         maxJetonPerColumn[j] = 0; 
+        for(size_t i = 0; i < WIDTH; ++i)
         {
-            board[i][j] = EMPTY;
+            board[i][j-1] = EMPTY;
         }
      }
  }
