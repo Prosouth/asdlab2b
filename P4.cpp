@@ -3,11 +3,11 @@
 
 void P4::reset()
 {
-    for(size_t i = 0; i < HEIGHT; ++i)
+    for(size_t ligne = 0; ligne < HEIGHT; ++ligne)
     {
-        for(size_t j = 0; j < WIDTH; ++j)
+        for(size_t col = 0; col < WIDTH; ++col)
         {
-            board[i][j] = EMPTY;
+            board[ligne][col] = EMPTY;
         }
      }
 }
@@ -15,12 +15,12 @@ void P4::reset()
 
  P4::P4()
  {
-     for(size_t j = HEIGHT; j <= 0; --j)
+     for(size_t ligne = 0; ligne < HEIGHT; ++ligne)
      {
-         maxJetonPerColumn[j] = 0; 
-        for(size_t i = 0; i < WIDTH; ++i)
+         maxJetonPerColumn[ligne] = 0; 
+        for(size_t col = 0; col < WIDTH; ++col)
         {
-            board[i][j-1] = EMPTY;
+            board[ligne][col] = EMPTY;
         }
      }
  }
@@ -28,11 +28,11 @@ void P4::reset()
  
  void P4::playInColumn(size_t c, Player p)
  {
-     for(size_t i = 0; i < HEIGHT; ++i)
+     for(size_t ligne = HEIGHT - 1; ligne >= 0; --ligne)
      {
-         if(board[c][i] == EMPTY)
+         if(board[ligne][c] == EMPTY)
          {
-             board[c][i] = p;
+             board[ligne][c] = p;
              maxJetonPerColumn[c]++; // incrémente le nb de jetons dans cette colonne
          }
          break;
@@ -121,12 +121,12 @@ void P4::test()
 std::ostream& operator << ( std::ostream& os, const P4& p4)
 {
     os << "\n+-+-+-+-+-+-+-+\n";
-    for(size_t j = HEIGHT; j >= 1; --j)
-     {
+    for(size_t ligne = 0; ligne < HEIGHT; ++ligne)
+    {
         os << "|";
-        for(size_t i = 0; i < WIDTH; i++)
+        for(size_t col = 0; col < WIDTH; col++)
         {
-            switch(p4.board[i][j-1])
+            switch(p4.board[ligne][col])
             {
                 case (int)X:
                     os << "X";
