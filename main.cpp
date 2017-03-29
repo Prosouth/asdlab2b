@@ -32,7 +32,8 @@ int interactive(P4Type& game, Player player)
         cin.ignore(numeric_limits<streamsize>::max(),'\n');
         cout << "Movement non valide. Essayez encore." << endl;
         return interactive(game,player);
-    } else
+    } 
+    else
         return n;
 }
 

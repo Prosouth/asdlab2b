@@ -28,41 +28,37 @@ void P4::reset()
  
  void P4::playInColumn(size_t c, Player p)
  {
-     for(size_t ligne = HEIGHT; ligne >= 1; --ligne)
-     {
-         if(board[ligne-1][c] == EMPTY)
-         {
-             board[ligne-1][c] = p;
-             maxJetonPerColumn[c]++;
-              // incrémente le nb de jetons dans cette colonne
-         }
-         else if(board[ligne-2][c] == EMPTY) // un truc du genre
-         {
-            board[ligne-2][c] = p;
-            maxJetonPerColumn[c]++;
-         }
-         else if(board[ligne-3][c] == EMPTY) // un truc du genre
-         {
-            board[ligne-3][c] = p;
-            maxJetonPerColumn[c]++;
-         }
-         else if(board[ligne-4][c] == EMPTY) // un truc du genre
-         {
-            board[ligne-4][c] = p;
-            maxJetonPerColumn[c]++;
-         }
-         else if(board[ligne-5][c] == EMPTY) // un truc du genre
-         {
-            board[ligne-5][c] = p;
-            maxJetonPerColumn[c]++;
-         }
-         else if(board[ligne-6][c] == EMPTY) // un truc du genre
-         {
-            board[ligne-6][c] = p;
-            maxJetonPerColumn[c]++;
-         }
-         break;
-     }
+    if(board[HEIGHT-1][c] == EMPTY)
+    {
+        board[HEIGHT-1][c] = p;
+        maxJetonPerColumn[c]++;
+         // incrémente le nb de jetons dans cette colonne
+    }
+    else if(board[HEIGHT-2][c] == EMPTY) // un truc du genre
+    {
+       board[HEIGHT-2][c] = p;
+       maxJetonPerColumn[c]++;
+    }
+    else if(board[HEIGHT-3][c] == EMPTY) // un truc du genre
+    {
+       board[HEIGHT-3][c] = p;
+       maxJetonPerColumn[c]++;
+    }
+    else if(board[HEIGHT-4][c] == EMPTY) // un truc du genre
+    {
+       board[HEIGHT-4][c] = p;
+       maxJetonPerColumn[c]++;
+    }
+    else if(board[HEIGHT-5][c] == EMPTY) // un truc du genre
+    {
+       board[HEIGHT-5][c] = p;
+       maxJetonPerColumn[c]++;
+    }
+    else if(board[HEIGHT-6][c] == EMPTY) // un truc du genre
+    {
+       board[HEIGHT-6][c] = p;
+       maxJetonPerColumn[c]++;
+    }
  }
  
 std::string P4::getName() const
@@ -72,17 +68,27 @@ std::string P4::getName() const
 
 bool P4::isValidMove(size_t c) const
 {
-    return (maxJetonPerColumn[c] < HEIGHT);
+    return ((maxJetonPerColumn[c] < HEIGHT) && (c < WIDTH));
 }
 
 bool P4::isWinner(Player p) const
 {
     for (size_t i = 0; i < WIDTH; ++i) 
     {
-        if (maxJetonPerColumn[i] >= 4
-            && board[i][maxJetonPerColumn[i] - 1] == p
-            && board[i][maxJetonPerColumn[i] - 2] == p
-            && board[i][maxJetonPerColumn[i] - 3] == p) 
+        
+        if (maxJetonPerColumn[i] >= 4 && 
+               (board[2][i] == p 
+            && board[3][i] == p
+            && board[4][i] == p
+            && board[5][i] == p)  
+            || (board[1][i] == p 
+            && board[2][i] == p
+            && board[3][i] == p
+            && board[4][i] == p)
+            || (board[0][i] == p 
+            && board[1][i] == p
+            && board[2][i] == p
+            && board[3][i] == p))
         {
             return true;
         }
