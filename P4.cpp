@@ -39,22 +39,27 @@ void P4::reset()
          else if(board[ligne-2][c] == EMPTY) // un truc du genre
          {
             board[ligne-2][c] = p;
+            maxJetonPerColumn[c]++;
          }
          else if(board[ligne-3][c] == EMPTY) // un truc du genre
          {
             board[ligne-3][c] = p;
+            maxJetonPerColumn[c]++;
          }
          else if(board[ligne-4][c] == EMPTY) // un truc du genre
          {
             board[ligne-4][c] = p;
+            maxJetonPerColumn[c]++;
          }
          else if(board[ligne-5][c] == EMPTY) // un truc du genre
          {
             board[ligne-5][c] = p;
+            maxJetonPerColumn[c]++;
          }
          else if(board[ligne-6][c] == EMPTY) // un truc du genre
          {
             board[ligne-6][c] = p;
+            maxJetonPerColumn[c]++;
          }
          break;
      }
