@@ -78,17 +78,17 @@ bool P4::isWinner(Player p) const
         
         if (maxJetonPerColumn[i] >= 4 && 
                (board[2][i] == p 
-            && board[3][i] == p
-            && board[4][i] == p
-            && board[5][i] == p)  
+            &&  board[3][i] == p
+            &&  board[4][i] == p
+            &&  board[5][i] == p)  
             || (board[1][i] == p 
-            && board[2][i] == p
-            && board[3][i] == p
-            && board[4][i] == p)
+            &&  board[2][i] == p
+            &&  board[3][i] == p
+            &&  board[4][i] == p)
             || (board[0][i] == p 
-            && board[1][i] == p
-            && board[2][i] == p
-            && board[3][i] == p))
+            &&  board[1][i] == p
+            &&  board[2][i] == p
+            &&  board[3][i] == p))
         {
             return true;
         }
