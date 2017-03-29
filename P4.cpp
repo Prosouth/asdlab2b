@@ -28,17 +28,33 @@ void P4::reset()
  
  void P4::playInColumn(size_t c, Player p)
  {
-     for(size_t ligne = HEIGHT; ligne >= 0; --ligne)
+     for(size_t ligne = HEIGHT; ligne >= 1; --ligne)
      {
-         if(board[ligne][c] == EMPTY)
+         if(board[ligne-1][c] == EMPTY)
          {
-             board[ligne][c] = p;
+             board[ligne-1][c] = p;
              maxJetonPerColumn[c]++;
               // incrémente le nb de jetons dans cette colonne
          }
-         else if(board[ligne - (HEIGHT - ligne)][c] == EMPTY) // un truc du genre
+         else if(board[ligne-2][c] == EMPTY) // un truc du genre
          {
-            board[ligne - (HEIGHT - ligne)][c] = p;
+            board[ligne-2][c] = p;
+         }
+         else if(board[ligne-3][c] == EMPTY) // un truc du genre
+         {
+            board[ligne-3][c] = p;
+         }
+         else if(board[ligne-4][c] == EMPTY) // un truc du genre
+         {
+            board[ligne-4][c] = p;
+         }
+         else if(board[ligne-5][c] == EMPTY) // un truc du genre
+         {
+            board[ligne-5][c] = p;
+         }
+         else if(board[ligne-6][c] == EMPTY) // un truc du genre
+         {
+            board[ligne-6][c] = p;
          }
          break;
      }
