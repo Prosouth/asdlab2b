@@ -67,7 +67,7 @@ std::string P4::getName() const
 
 bool P4::isValidMove(size_t c) const
 {
-    return (board[c][HEIGHT - 1] == EMPTY && (c < WIDTH));
+    return (maxJetonPerColumn[c] < HEIGHT);
 }
 
 bool P4::isWinner(Player p) const
