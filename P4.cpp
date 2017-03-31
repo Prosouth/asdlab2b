@@ -204,6 +204,10 @@ size_t P4::nbMoves() const
 
 size_t P4::chooseNextMove(Player p, unsigned depth)
 {
+    if(depth == 0)
+    {
+        return 0;
+    }
     if(nbMoves() == WIDTH * HEIGHT)
     {
         return 0;
@@ -224,7 +228,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
         if(isValidMove(x))
         {
             playInColumn(x,((Player)(int(p) * -1)));
-            int score = -(chooseNextMove((Player)(int(p) * -1),depth));
+            int score = -(chooseNextMove((Player)(int(p) * -1),depth - 1));
             if(score > bestScore)
             {
                 bestScore = score;
