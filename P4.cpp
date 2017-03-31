@@ -33,6 +33,7 @@ void P4::reset()
         board[HEIGHT-1][c] = p;
         maxJetonPerColumn[c]++;
         maxJetonPerLines[HEIGHT - 1]++;
+        nbMove++;
          // incrémente le nb de jetons dans cette colonne
     }
     else if(board[HEIGHT-2][c] == EMPTY) // un truc du genre
@@ -40,30 +41,35 @@ void P4::reset()
        board[HEIGHT-2][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 2]++;
+       nbMove++;
     }
     else if(board[HEIGHT-3][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-3][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 3]++;
+       nbMove++;
     }
     else if(board[HEIGHT-4][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-4][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 4]++;
+       nbMove++;
     }
     else if(board[HEIGHT-5][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-5][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 5]++;
+       nbMove++;
     }
     else if(board[HEIGHT-6][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-6][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 6]++;
+       nbMove++;
     }  
  }
  
@@ -143,11 +149,42 @@ bool P4::isWinner(Player p) const
     return false;
 }
 
+size_t P4::nbMoves() const
+{
+    return nbMove;
+}
 
 
 size_t P4::chooseNextMove(Player p, unsigned depth)
 {
-    return 1;
+    if(nbMoves() == WIDTH * HEIGHT)
+    {
+        return 0;
+    }
+    
+    for(size_t x = 0; x < WIDTH; x++)
+    {
+        if(isValidMove(x) && isWinner(p))
+        {
+            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
+        }
+    }
+    
+    int bestScore = -(WIDTH*HEIGHT);
+    
+    for(size_t x = 0; x < WIDTH; x++)
+    {
+        if(isValidMove(x))
+        {
+            playInColumn(x,((Player)(int(p) * -1)));
+            int score = -(chooseNextMove((Player)(int(p) * -1),depth));
+            if(score > bestScore)
+            {
+                bestScore = score;
+            }
+        }
+    }
+    return bestScore;
 }
 
 

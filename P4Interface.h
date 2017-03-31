@@ -13,8 +13,8 @@
 #include <string>
 
 enum Player { O = -1, EMPTY = 0, X = 1 };
-static const size_t HEIGHT = 6;
-static const size_t WIDTH = 7;
+static const int HEIGHT = 6;
+static const int WIDTH = 7;
 class P4Interface {
 public:
     virtual std::string getName() const = 0;

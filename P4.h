@@ -12,6 +12,7 @@ class P4 : public P4Interface
     size_t maxJetonPerColumn[WIDTH]; // utile pour tracker le nb de jeton par colonne
     size_t maxJetonPerLines[HEIGHT]; 
     Player board[HEIGHT][WIDTH];
+    int nbMove = 0;
 
     
 public:
@@ -78,9 +79,8 @@ public:
      */
     std::string getName() const;
     
-    
-    
-    void test();
+
+    size_t nbMoves() const;
 };
 
 /**
