@@ -158,31 +158,6 @@ void P4::test()
 }
 
 
-
-/*
- 7 colonnes 6 lignes
- * on veut
- * 05|15|25|35|45|55|65    -> l0h5/l1h5/l2h5/l3h5/l4h5/l5h5/l6h5     j de 5(HEIGHT) à -> 0 
- * 04|14|24|34|44|54|64    -> l0h1/l1h4/l2h4/l3h4/l4h4/l5h4/l6h4     i de 0 à -> 6 (WIDTH)
- * 03 ......
- * 02                           .   .   .   .   ..  
- * 01                           .   .   .   ..  ..      ..  .       
- * 00|10|20|30|40|50|60       l0h0/l1h0/l2h0/l3h0/l4h0/l5h0/l6h0
- * 
- * Le putain de tableau sa mere la chienne il fait pas comme ça
- * il fait plutôt comme ça ce bâtard :
- * 
- * 00|01|02|03|04|05|
- * 10|11|12|13|14|15|
- * 20|21|22|23|24|25|
- * 30...
- * 40...
- * 50.....
- * 60|61|62|63|64|65|
- * donc c pour ça qu'on a une hauteur de 7 et une largeur de 6. -> FUCK.
- 
- */
-
 std::ostream& operator << ( std::ostream& os, const P4& p4)
 {
     os << "\n+-+-+-+-+-+-+-+\n";
