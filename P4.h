@@ -39,6 +39,9 @@ public:
      */
     void playInColumn(size_t c, Player p);
     
+    void unPlayInColumn(size_t c, Player p);
+   
+    
     /**
      *  @brief Verifie si le joueur p gagne
      *
@@ -47,7 +50,7 @@ public:
      *  @return vrai si 4 a la suite pour p, faux sinon
      */
     bool isWinner(Player p) const;
-    
+        
     /**
      *  @brief Verifie si jouer dans la colonne c est valide
      *

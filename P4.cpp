@@ -73,6 +73,53 @@ void P4::reset()
     }  
  }
  
+ void P4::unPlayInColumn(size_t c, Player p)
+ {    
+    if(board[HEIGHT-6][c] == p)
+    {
+        board[HEIGHT-6][c] = EMPTY;
+        maxJetonPerColumn[c]--;
+        maxJetonPerLines[HEIGHT - 1]--;
+        nbMove--;
+         // incrémente le nb de jetons dans cette colonne
+    }
+    else if(board[HEIGHT-5][c] == p) // un truc du genre
+    {
+       board[HEIGHT-5][c] = EMPTY;
+       maxJetonPerColumn[c]--;
+       maxJetonPerLines[HEIGHT - 5]--;
+       nbMove--;
+    }
+    else if(board[HEIGHT-4][c] == p) // un truc du genre
+    {
+       board[HEIGHT-4][c] = EMPTY;
+       maxJetonPerColumn[c]--;
+       maxJetonPerLines[HEIGHT - 4]--;
+       nbMove--;
+    }
+    else if(board[HEIGHT-3][c] == p) // un truc du genre
+    {
+       board[HEIGHT-3][c] = EMPTY;
+       maxJetonPerColumn[c]--;
+       maxJetonPerLines[HEIGHT - 3]--;
+       nbMove--;
+    }
+    else if(board[HEIGHT-2][c] == p) // un truc du genre
+    {
+       board[HEIGHT-2][c] = EMPTY;
+       maxJetonPerColumn[c]--;
+       maxJetonPerLines[HEIGHT - 2]--;
+       nbMove--;
+    }
+    else if(board[HEIGHT-1][c] == p) // un truc du genre
+    {
+       board[HEIGHT-1][c] = EMPTY;
+       maxJetonPerColumn[c]--;
+       maxJetonPerLines[HEIGHT - 1]--;
+       nbMove--;
+    }  
+ }
+ 
 std::string P4::getName() const
 {
     return "Les Cuistos";
@@ -182,7 +229,10 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
             {
                 bestScore = score;
             }
-        }
+            
+            // Démarquer la case
+            unPlayInColumn(x,((Player)(int(p) * -1)));
+        } 
     }
     return bestScore;
 }
