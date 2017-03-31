@@ -10,6 +10,7 @@ class P4 : public P4Interface
  
     // A COMPLETER SELON VOS BESOINS EN ATTRIBUTS ET METHODES PRIVEES
     size_t maxJetonPerColumn[WIDTH]; // utile pour tracker le nb de jeton par colonne
+    size_t maxJetonPerLines[HEIGHT]; 
     Player board[HEIGHT][WIDTH];
 
     

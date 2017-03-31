@@ -32,33 +32,39 @@ void P4::reset()
     {
         board[HEIGHT-1][c] = p;
         maxJetonPerColumn[c]++;
+        maxJetonPerLines[HEIGHT - 1]++;
          // incrémente le nb de jetons dans cette colonne
     }
     else if(board[HEIGHT-2][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-2][c] = p;
        maxJetonPerColumn[c]++;
+       maxJetonPerLines[HEIGHT - 2]++;
     }
     else if(board[HEIGHT-3][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-3][c] = p;
        maxJetonPerColumn[c]++;
+       maxJetonPerLines[HEIGHT - 3]++;
     }
     else if(board[HEIGHT-4][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-4][c] = p;
        maxJetonPerColumn[c]++;
+       maxJetonPerLines[HEIGHT - 4]++;
     }
     else if(board[HEIGHT-5][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-5][c] = p;
        maxJetonPerColumn[c]++;
+       maxJetonPerLines[HEIGHT - 5]++;
     }
     else if(board[HEIGHT-6][c] == EMPTY) // un truc du genre
     {
        board[HEIGHT-6][c] = p;
        maxJetonPerColumn[c]++;
-    }
+       maxJetonPerLines[HEIGHT - 6]++;
+    }  
  }
  
 std::string P4::getName() const
@@ -88,23 +94,50 @@ bool P4::isWinner(Player p) const
             || (board[0][i] == p 
             &&  board[1][i] == p
             &&  board[2][i] == p
-            &&  board[3][i] == p))
+            &&  board[3][i] == p)) // Check vertical
         {
             return true;
         }
-
-
-        for (int dy = -1; dy <= 1; dy++) { // Iterate on horizontal (dy = 0) or two diagonal directions (dy = -1 or dy = 1).
-            int nb = 0; // counter of the number of stones of current player surronding the played stone in tested direction.
-            for (int dx = -1; dx <= 1; dx += 2) // count continuous stones of current player on the left, then right of the played column.
-                for (int x = i + dx, y = maxJetonPerColumn[i] + dx * dy; x >= 0 && 
-                     x < WIDTH && y >= 0 && y < HEIGHT && board[x][y] == p; nb++) 
-                {
-                    x += dx;
-                    y += dx*dy;
-                }
-            if (nb >= 4) return true; // there is an aligment if at least 3 other stones of the current user 
-            // are surronding the played stone in the tested direction.
+        else if(maxJetonPerLines[i] >= 4 && i < WIDTH - 1 && 
+                (board[i][0] == p
+                && board[i][1] == p
+                && board[i][2] == p
+                && board[i][3] == p)||
+                (board[i][1] == p
+                && board[i][2] == p
+                && board[i][3] == p
+                && board[i][4] == p)||
+                (board[i][2] == p
+                && board[i][3] == p
+                && board[i][4] == p
+                && board[i][5] == p)||
+                (board[i][3] == p
+                && board[i][4] == p
+                && board[i][5] == p
+                && board[i][6] == p)) // Check horizontal
+        {
+            return true;
+        } 
+    }
+    for(size_t i = 3; i < WIDTH; ++i) // Check diagonales ascendantes
+    {
+        for(size_t j = 0; j < HEIGHT - 3; ++j)
+        {
+            if(board[i][j] == p && board[i -1][j + 1] == p && board[i - 2][j + 2] == p && board[i - 3][j + 3] == p)
+            {
+                return true;
+            }
+        }
+    }
+    
+    for(size_t i = 3; i < WIDTH; ++i) // Check diagonales descendantes
+    {
+        for(size_t j = WIDTH -1; j >= 3; --j)
+        {
+            if(board[i][j] == p && board[i - 1][j - 1] == p && board[i - 2][j - 2] == p && board[i - 3][j - 3] == p)
+            {
+                return true;
+            }
         }
     }
     return false;
