@@ -152,12 +152,6 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
 
 
 
-void P4::test()
-{
-   
-}
-
-
 std::ostream& operator << ( std::ostream& os, const P4& p4)
 {
     os << "\n+-+-+-+-+-+-+-+\n";
