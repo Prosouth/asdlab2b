@@ -1,5 +1,7 @@
 #include "P4.h"
+#include <limits>
 
+using namespace std;
 
 void P4::reset()
 {
@@ -135,39 +137,39 @@ bool P4::isWinner(Player p) const
     for (size_t i = 0; i < WIDTH; ++i) 
     {
         
-        if (maxJetonPerColumn[i] >= 4 && 
-               (board[2][i] == p 
-            &&  board[3][i] == p
-            &&  board[4][i] == p
-            &&  board[5][i] == p)  
-            || (board[1][i] == p 
-            &&  board[2][i] == p
-            &&  board[3][i] == p
-            &&  board[4][i] == p)
-            || (board[0][i] == p 
-            &&  board[1][i] == p
-            &&  board[2][i] == p
-            &&  board[3][i] == p)) // Check vertical
+        if ((maxJetonPerColumn[i] >= 4) && 
+               ((board[2][i] == p) 
+            &&  (board[3][i] == p)
+            &&  (board[4][i] == p)
+            &&  (board[5][i] == p))  
+            || ((board[1][i] == p)
+            &&  (board[2][i] == p)
+            &&  (board[3][i] == p)
+            &&  (board[4][i] == p))
+            || ((board[0][i] == p) 
+            &&  (board[1][i] == p)
+            &&  (board[2][i] == p)
+            &&  (board[3][i] == p))) // Check vertical
         {
             return true;
         }
-        else if(maxJetonPerLines[i] >= 4 && i < WIDTH - 1 && 
-                (board[i][0] == p
-                && board[i][1] == p
-                && board[i][2] == p
-                && board[i][3] == p)||
-                (board[i][1] == p
-                && board[i][2] == p
-                && board[i][3] == p
-                && board[i][4] == p)||
-                (board[i][2] == p
-                && board[i][3] == p
-                && board[i][4] == p
-                && board[i][5] == p)||
-                (board[i][3] == p
-                && board[i][4] == p
-                && board[i][5] == p
-                && board[i][6] == p)) // Check horizontal
+        else if((maxJetonPerLines[i] >= 4) && (i < WIDTH - 1) 
+                &&((board[i][0] == p)
+                && (board[i][1] == p)
+                && (board[i][2] == p)
+                && (board[i][3] == p))
+                ||((board[i][1] == p)
+                && (board[i][2] == p)
+                && (board[i][3] == p)
+                && (board[i][4] == p))
+                ||((board[i][2] == p)
+                && (board[i][3] == p)
+                && (board[i][4] == p)
+                && (board[i][5] == p))
+                ||((board[i][3] == p)
+                && (board[i][4] == p)
+                && (board[i][5] == p)
+                && (board[i][6] == p))) // Check horizontal
         {
             return true;
         } 
@@ -202,40 +204,74 @@ size_t P4::nbMoves() const
 }
 
 
-size_t P4::chooseNextMove(Player p, unsigned depth)
+size_t P4::chooseNextMove(Player p, unsigned depth) 
 {
-    if(nbMoves() == WIDTH * HEIGHT)
-    {
-        return 0;
-    }
+
+    static bool firstStone = true;
+    size_t bestMove = WIDTH;
+    //on initialise le score à "moins l'infini"
+    int bestScore = -(WIDTH * HEIGHT);
     
-    for(size_t x = 0; x < WIDTH; x++)
+    int bestScore2Play;
+
+    //si il s'agit du premier coup joué alors on doit jouer au milieu
+    if (firstStone) 
     {
-        if(isValidMove(x) && isWinner(p))
+        firstStone = false;
+        return WIDTH / 2;
+    }
+
+    
+    //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
+    size_t nextMove = rand() % WIDTH;
+    
+    for(size_t i = 0 ; i < WIDTH ; i++)
+    {
+        //on regarde la colonne suivante en faisant attention de ne pas dépasser WIDTH
+        nextMove = (nextMove + i)%WIDTH;
+
+        if (isValidMove(nextMove)) 
         {
-            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
+            int score = calculeScore(nextMove, p, depth);
+            if (score > bestScore) 
+            {
+                    bestScore = score;
+                    bestScore2Play = nextMove;
+            }
         }
     }
     
-    int bestScore = -(WIDTH*HEIGHT);
     
-    for(size_t x = 0; x < WIDTH; x++)
-    {
-        if(isValidMove(x))
-        {
-            playInColumn(x,((Player)(int(p) * -1)));
-            int score = -(chooseNextMove((Player)(int(p) * -1),depth));
-            if(score > bestScore)
-            {
-                bestScore = score;
-            }
-            
-            // Démarquer la case
-            unPlayInColumn(x,((Player)(int(p) * -1)));
-        } 
-    }
-    return bestScore;
+    return bestScore2Play;
+
 }
+
+    
+    
+    
+int P4::calculeScore(size_t col, const Player& p, unsigned depth) 
+{
+    //le score de la case à retourner
+    int scorePlayer;
+
+    //le cas de l'égalité -> on renvoit un score de 0
+    if (nbMoves() == WIDTH * HEIGHT) {
+        scorePlayer = 0;
+    }
+
+
+    //une façon de calculer un score 
+    for (size_t x = 0; x < WIDTH; x++) {
+        if (isValidMove(x) && isWinner(p)) {
+            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
+        }
+    }
+
+    return scorePlayer;
+}
+    
+
+
 
 
 
