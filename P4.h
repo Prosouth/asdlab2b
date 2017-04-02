@@ -70,6 +70,11 @@ public:
      */
     void playInColumn(size_t c, Player p);
     
+    /**
+     * @brief annule le dernier coup joué
+     * @param lastLine
+     * @param lastColumn
+     */
     void unPlayInColumn(size_t lastLine, size_t lastColumn);
    
     
@@ -111,11 +116,7 @@ public:
      *  @return Un nom qui sera typiquement tronque a l'affichage
      *          pour ne garder que les 4 premieres lettres
      */
-    std::string getName() const;
-    
+    std::string getName() const;  
 };
-
-
-
 
 #endif /* P4_h */
