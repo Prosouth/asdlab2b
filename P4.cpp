@@ -50,35 +50,35 @@ void P4::reset()
         nbMove++;
          // incrémente le nb de jetons dans cette colonne
     }
-    else if(board[HEIGHT-2][c] == EMPTY) // un truc du genre
+    else if(board[HEIGHT-2][c] == EMPTY) 
     {
        board[HEIGHT-2][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 2]++;
        nbMove++;
     }
-    else if(board[HEIGHT-3][c] == EMPTY) // un truc du genre
+    else if(board[HEIGHT-3][c] == EMPTY) 
     {
        board[HEIGHT-3][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 3]++;
        nbMove++;
     }
-    else if(board[HEIGHT-4][c] == EMPTY) // un truc du genre
+    else if(board[HEIGHT-4][c] == EMPTY) 
     {
        board[HEIGHT-4][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 4]++;
        nbMove++;
     }
-    else if(board[HEIGHT-5][c] == EMPTY) // un truc du genre
+    else if(board[HEIGHT-5][c] == EMPTY) 
     {
        board[HEIGHT-5][c] = p;
        maxJetonPerColumn[c]++;
        maxJetonPerLines[HEIGHT - 5]++;
        nbMove++;
     }
-    else if(board[HEIGHT-6][c] == EMPTY) // un truc du genre
+    else if(board[HEIGHT-6][c] == EMPTY) 
     {
        board[HEIGHT-6][c] = p;
        maxJetonPerColumn[c]++;
@@ -97,35 +97,35 @@ void P4::reset()
         nbMove--;
          // incrémente le nb de jetons dans cette colonne
     }
-    else if(board[HEIGHT-5][c] == p) // un truc du genre
+    else if(board[HEIGHT-5][c] == p) 
     {
        board[HEIGHT-5][c] = EMPTY;
        maxJetonPerColumn[c]--;
        maxJetonPerLines[HEIGHT - 5]--;
        nbMove--;
     }
-    else if(board[HEIGHT-4][c] == p) // un truc du genre
+    else if(board[HEIGHT-4][c] == p) 
     {
        board[HEIGHT-4][c] = EMPTY;
        maxJetonPerColumn[c]--;
        maxJetonPerLines[HEIGHT - 4]--;
        nbMove--;
     }
-    else if(board[HEIGHT-3][c] == p) // un truc du genre
+    else if(board[HEIGHT-3][c] == p) 
     {
        board[HEIGHT-3][c] = EMPTY;
        maxJetonPerColumn[c]--;
        maxJetonPerLines[HEIGHT - 3]--;
        nbMove--;
     }
-    else if(board[HEIGHT-2][c] == p) // un truc du genre
+    else if(board[HEIGHT-2][c] == p) 
     {
        board[HEIGHT-2][c] = EMPTY;
        maxJetonPerColumn[c]--;
        maxJetonPerLines[HEIGHT - 2]--;
        nbMove--;
     }
-    else if(board[HEIGHT-1][c] == p) // un truc du genre
+    else if(board[HEIGHT-1][c] == p) 
     {
        board[HEIGHT-1][c] = EMPTY;
        maxJetonPerColumn[c]--;
@@ -199,7 +199,7 @@ bool P4::isWinner(Player p) const
     
     for(size_t i = 3; i < WIDTH; ++i) // Check diagonales descendantes
     {
-        for(size_t j = WIDTH -1; j >= 3; --j)
+        for(size_t j = WIDTH - 1; j >= 3; --j)
         {
             if(board[i][j] == p && board[i - 1][j - 1] == p && board[i - 2][j - 2] == p && board[i - 3][j - 3] == p)
             {
@@ -223,9 +223,6 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
     
     //on initialise le score à "moins l'infini"
     int bestScore = -(WIDTH * HEIGHT);
-    
-    
-    
     int bestCase2Play;
 
     //si il s'agit du premier coup joué alors on doit jouer au milieu
@@ -258,8 +255,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
     return bestCase2Play;
 }
 
-    
-  
+     
     
 int P4::calculeScore(size_t col, const Player& p, unsigned depth) 
 {
@@ -289,7 +285,6 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     else
     {
         int bestScore = -WIDTH*HEIGHT;
-
          //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
         size_t nextMove = random(0,WIDTH) % WIDTH;
 
@@ -305,21 +300,12 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
                 if(score > bestScore)
                 {
                         bestScore = score;
-                }
-               
+                }              
             }
         }
-        scorePlayer = -bestScore;
-    
+        scorePlayer = -bestScore;    
     }
-    
-//    //une façon de calculer un score 
-//    for (size_t x = 0; x < WIDTH; x++) {
-//        if (isValidMove(x) && isWinner(p)) {
-//            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
-//        }
-//    }
-    
+
     //on efface le coup joué
     unPlayInColumn(col, p);
 
@@ -334,11 +320,9 @@ int P4::heuristique(const Player& p)
         return 3;
     }
     
-    
     //on regarde si 3 jetons d'affilés sont alignés ou si on peut gagner au prochain coup
     for(size_t i = 0; i < WIDTH; i++)
     {
-        
         if(isValidMove(i))
         {
             playInColumn(i,p);
@@ -349,21 +333,15 @@ int P4::heuristique(const Player& p)
             }
             unPlayInColumn(i,p);
         }
-        
     }
     
-    
-
-    
     int colonneAleatoire = random(0,WIDTH)%WIDTH;
-    while(!isValidMove(colonneAleatoire)){
+    while(!isValidMove(colonneAleatoire))
+    {
         colonneAleatoire = random(0, WIDTH)%WIDTH;
     }
     return colonneAleatoire;
 }
-
-
-
 
 
 std::ostream& operator << ( std::ostream& os, const P4& p4)
