@@ -1,6 +1,5 @@
 #ifndef P4_h
 #define P4_h
-#include <limits>
 #include "P4Interface.h"
 #include <iostream>
 
@@ -17,7 +16,9 @@ class P4 : public P4Interface
     friend std::ostream& operator << (std::ostream& os, const P4& p4);
     
 private:
-        
+
+    const bool ELAGAGE_ALPHA_BETA = false;
+
     size_t maxJetonPerColumn[WIDTH] = {0,0,0,0,0,0,0}; // utile pour tracker le nb de jeton par colonne
     size_t maxJetonPerLines[HEIGHT] = {0,0,0,0,0,0}; // de même pour les lignes
     Player board[HEIGHT][WIDTH];    //la grille de jeu
@@ -38,11 +39,13 @@ private:
      * @param depth, la profondeur de la recursion.
      * @return un entier représentant le score de la case courante obtenue avec la colonne passée en paramètre
      */
-    int calculeScore(size_t col, const Player& p, unsigned depth);
+    int calculeScore(size_t col, const Player& p, unsigned depth, int alpha = ALPHA, int beta = BETA);
 
     
 public:
 
+    const static int ALPHA = std::numeric_limits<int>::lowest();
+    const static int BETA = std::numeric_limits<int>::max();
     // NE PAS MODIFIER L'INTERFACE PUBLIC.
     // IMPLEMENTER LES METHODES SEPAREMENT
     // DANS UN FICHIER .CPP

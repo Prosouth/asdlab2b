@@ -192,6 +192,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
         firstStone = false;
         return WIDTH / 2;
     }
+  
 
     
     //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
@@ -204,7 +205,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
 
         if (isValidMove(nextMove)) 
         {
-            int score = calculeScore(nextMove, p, depth);
+            int score = calculeScore(nextMove, p, depth, ALPHA, BETA);
             
             if(score > bestScore)
             {
@@ -218,7 +219,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
 
      
     
-int P4::calculeScore(size_t col, const Player& p, unsigned depth) 
+int P4::calculeScore(size_t col, const Player& p, unsigned depth, int alpha, int beta) 
 {
     //le score de la case à retourner
     int scorePlayer;
@@ -256,12 +257,25 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
 
             if (isValidMove(nextMove)) 
             {
-                int score = calculeScore(nextMove, (Player)((int)p*-1), depth-1);
+                int score = calculeScore(nextMove, (Player)((int)p*-1), depth-1, alpha, beta);
                 
                 if(score > bestScore)
                 {
-                        bestScore = score;
-                }              
+                    bestScore = score;
+                } 
+                
+                if (ELAGAGE_ALPHA_BETA) 
+                {
+                    if(score > alpha)
+                    {
+                        alpha = score;
+                    } 
+                    //sort de la boucle for
+                    if (alpha >= beta) 
+                    {
+                        break;
+                    }
+                }
             }
         }
         scorePlayer = -bestScore;    
@@ -290,7 +304,7 @@ int P4::heuristique(const Player& p)
             if(isWinner(p))
             {
                 unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
-                return i;
+                return 2*i;
             }
             unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
         }
@@ -313,11 +327,8 @@ int P4::heuristique(const Player& p)
     
     
     //sinon on joue aléatoirement
-    int colonneAleatoire = random(0,WIDTH)%WIDTH;
-    while(!isValidMove(colonneAleatoire))
-    {
-        colonneAleatoire = random(0, WIDTH)%WIDTH;
-    }
+    int colonneAleatoire = random(0,WIDTH);
+    
     return colonneAleatoire;
 }
 
