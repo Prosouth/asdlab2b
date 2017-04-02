@@ -73,7 +73,7 @@ int main()
     int np = askNumberOfPlayers();
     bool human[2];
     for(size_t i = 0; i < 2; i++)
-        human[i] = i+1 <= np;
+        human[i] = (int)i+1 <= np;
     if(rand()%2) swap(human[0],human[1]);
     
     P4Type game;

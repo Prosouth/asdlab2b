@@ -110,39 +110,39 @@ bool P4::isWinner(Player p) const
     for (size_t i = 0; i < WIDTH; ++i) 
     {
         
-        if ((maxJetonPerColumn[i] >= 4) && 
-               ((board[2][i] == p) 
-            &&  (board[3][i] == p)
-            &&  (board[4][i] == p)
-            &&  (board[5][i] == p))  
-            || ((board[1][i] == p)
-            &&  (board[2][i] == p)
-            &&  (board[3][i] == p)
-            &&  (board[4][i] == p))
-            || ((board[0][i] == p) 
-            &&  (board[1][i] == p)
-            &&  (board[2][i] == p)
-            &&  (board[3][i] == p))) // Check vertical
+        if (((maxJetonPerColumn[i] >= 4) && 
+            ((board[2][i] == p))
+        &&  ((board[3][i] == p))
+        &&  ((board[4][i] == p))
+        &&  ((board[5][i] == p)))
+        || (((board[1][i] == p))
+        &&  ((board[2][i] == p))
+        &&  ((board[3][i] == p))
+        &&  ((board[4][i] == p)))
+        || (((board[0][i] == p))
+        &&  ((board[1][i] == p))
+        &&  ((board[2][i] == p))
+        &&  ((board[3][i] == p)))) // Check vertical
         {
             return true;
         }
-        else if((maxJetonPerLines[i] >= 4) && (i < WIDTH - 1) 
-                &&((board[i][0] == p)
-                && (board[i][1] == p)
-                && (board[i][2] == p)
-                && (board[i][3] == p))
-                ||((board[i][1] == p)
-                && (board[i][2] == p)
-                && (board[i][3] == p)
-                && (board[i][4] == p))
-                ||((board[i][2] == p)
-                && (board[i][3] == p)
-                && (board[i][4] == p)
-                && (board[i][5] == p))
-                ||((board[i][3] == p)
-                && (board[i][4] == p)
-                && (board[i][5] == p)
-                && (board[i][6] == p))) // Check horizontal
+        else if(((maxJetonPerLines[i] >= 4) && (i < WIDTH - 1) 
+        &&  ((board[i][0] == p))
+        &&  ((board[i][1] == p))
+        &&  ((board[i][2] == p))
+        &&  ((board[i][3] == p)))
+        || (((board[i][1] == p))
+        &&  ((board[i][2] == p))
+        &&  ((board[i][3] == p))
+        &&  ((board[i][4] == p)))
+        || (((board[i][2] == p))
+        &&  ((board[i][3] == p))
+        &&  ((board[i][4] == p))
+        &&  ((board[i][5] == p)))
+        || (((board[i][3] == p))
+        &&  ((board[i][4] == p))
+        &&  ((board[i][5] == p))
+        &&  ((board[i][6] == p)))) // Check horizontal
         {
             return true;
         } 
@@ -180,11 +180,10 @@ size_t P4::nbMoves() const
 size_t P4::chooseNextMove(Player p, unsigned depth) 
 {
     static bool firstStone = true;
-    size_t bestMove = WIDTH;
+    size_t bestMove = 0;
     
     //on initialise le score à "moins l'infini"
     int bestScore = -(WIDTH * HEIGHT);
-    int bestCase2Play;
 
     //si il s'agit du premier coup joué alors on doit jouer au milieu
     if (firstStone) 
@@ -210,11 +209,11 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
             if(score > bestScore)
             {
                     bestScore = score;
-                    bestCase2Play = nextMove;
+                    bestMove = nextMove;
             }
         }
     }   
-    return bestCase2Play;
+    return bestMove;
 }
 
      
@@ -304,7 +303,7 @@ int P4::heuristique(const Player& p)
             if(isWinner(p))
             {
                 unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
-                return 2*i;
+                return 2 *(int)i;
             }
             unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
         }
@@ -319,7 +318,7 @@ int P4::heuristique(const Player& p)
             if(isWinner((Player((int)p*-1))))
             {
                 unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
-                return i;
+                return (int)i;
             }
             unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
         }

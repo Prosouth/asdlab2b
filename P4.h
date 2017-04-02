@@ -2,6 +2,7 @@
 #define P4_h
 #include "P4Interface.h"
 #include <iostream>
+#include <limits>
 
 class P4 : public P4Interface
 {
