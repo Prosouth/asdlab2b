@@ -225,7 +225,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
 
     
     //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
-    size_t nextMove = rand() % WIDTH;
+    size_t nextMove = heuristique(p); 
     
     for(size_t i = 0 ; i < WIDTH ; i++)
     {
@@ -319,6 +319,62 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
 
 int P4::heuristique(const Player& p) 
 {
+    //on remplit la colonne du milieu tant que l'adevrsaire joue au centre
+    if(nbMove <= 5 && board[HEIGHT - nbMove][3] != EMPTY)
+    {
+        return 3;
+    }
+    
+    
+    //on regarde si 3 jetons d'affilés sont alignés ou si on peut gagner au prochain coup
+    for(size_t i = 0; i < WIDTH; i++)
+    {
+        
+        if(isValidMove(i))
+        {
+            playInColumn(i,p);
+            if(isWinner(p))
+            {
+                unPlayInColumn(i,p);
+                return i;
+            }
+            unPlayInColumn(i,p);
+        }
+        
+    }
+// 
+//    //on regarde si 3 jetons d'affilés sont alignés ou si on peut gagner au prochain coup
+//    for(size_t i = 0; i < WIDTH; i++)
+//    {
+//        
+//        if(isValidMove(i))
+//        {
+//            playInColumn(i,(Player)((int)p*-1));
+//            if(isWinner((Player)((int)p*-1)))
+//            {
+//                unPlayInColumn(i,(Player)((int)p*-1));
+//                return i;
+//            }
+//            unPlayInColumn(i,(Player)((int)p*-1));
+//        }
+//        
+//    }
+//    
+    
+    
+    
+    
+    
+    
+    
+//    //sinon si l'adversaire peut gagner, on doit le contrer
+//            else if(isWinner((Player)(int)p*-1))
+//            {
+//                
+//                
+//                return i;
+//            }
+
     return rand()%WIDTH;
 }
 
