@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int random(int min, int max) //range : [min, max)
+int random(int min, int max) //range : [min, max[
 {
    static bool first = true;
    if ( first ) 
@@ -45,10 +45,9 @@ void P4::reset()
     if(board[HEIGHT-1][c] == EMPTY)
     {
         board[HEIGHT-1][c] = p;
-        maxJetonPerColumn[c]++;
-        maxJetonPerLines[HEIGHT - 1]++;
-        nbMove++;
-         // décrémente le nb de jetons dans cette colonne
+        maxJetonPerColumn[c]++; //incrémente le nombre de jetons présent dans la colonne c
+        maxJetonPerLines[HEIGHT - 1]++; //incrément le nombre de jetons dans la ligne correspondante
+        nbMove++;               //incrémente le compteur de coups joués
     }
     else if(board[HEIGHT-2][c] == EMPTY) 
     {
@@ -87,13 +86,13 @@ void P4::reset()
     }  
  }
  
- void P4::unPlayInColumn(size_t lastLine, size_t lastColumn)
- {    
-        board[lastLine][lastColumn] = EMPTY;
-        maxJetonPerColumn[lastColumn]--;
-        maxJetonPerLines[lastLine]--;
-        nbMove--;
- }
+void P4::unPlayInColumn(size_t lastLine, size_t lastColumn)
+{    
+    board[lastLine][lastColumn] = EMPTY; //on met EMPTY dans la dernière position
+    maxJetonPerColumn[lastColumn]--; //on décrémente le nombre de jetons dans la colonne
+    maxJetonPerLines[lastLine]--;   //on décrémente le nombre de jetons dans la ligne
+    nbMove--;
+}
  
 std::string P4::getName() const
 {
@@ -171,10 +170,6 @@ bool P4::isWinner(Player p) const
     return false;
 }
 
-size_t P4::nbMoves() const
-{
-    return nbMove;
-}
 
 
 size_t P4::chooseNextMove(Player p, unsigned depth) 
@@ -233,7 +228,7 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth, int alpha, int
         return WIDTH*HEIGHT;
     }
     //le cas de l'égalité -> on renvoie un score de 0
-    if (nbMoves() == WIDTH * HEIGHT) {
+    if (nbMove == WIDTH * HEIGHT) {
         scorePlayer = 0;
     }
     //on atteint la profondeur limite

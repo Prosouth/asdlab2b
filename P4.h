@@ -8,10 +8,8 @@ class P4 : public P4Interface
 {
     /**
      *  @brief Surcharge de << pour afficher la grille du jeu
-     *
-     *  @param std::ostream&     le flux utilise pour laffichage
+     *  @param std::ostream&, le flux utilisé pour l'affichage
      *  @param P4& un objet de votre classe P4
-     *
      *  @return le flux original
     */
     friend std::ostream& operator << (std::ostream& os, const P4& p4);
@@ -26,9 +24,9 @@ private:
     int nbMove = 0;                 //le nombre de coups joués
     
     /**
-     * 
-     * @param p
-     * @return un entier représentant la valeur de la case jou
+     * @brief décide du score à attribuer en fonction de la case jouée
+     * @param p, le joueur courant
+     * @return un entier représentant la valeur de la case jouée
      */
     int heuristique(const Player& p);
     
@@ -38,6 +36,8 @@ private:
      * @param col, la colonne testée
      * @param p, le Player courant
      * @param depth, la profondeur de la recursion.
+     * @param alpha, donné par défaut pour l'élagage
+     * @param beta, donné par défaut pour l'élagage
      * @return un entier représentant le score de la case courante obtenue avec la colonne passée en paramètre
      */
     int calculeScore(size_t col, const Player& p, unsigned depth, int alpha = ALPHA, int beta = BETA);
@@ -47,6 +47,7 @@ public:
 
     const static int ALPHA = std::numeric_limits<int>::lowest();
     const static int BETA = std::numeric_limits<int>::max();
+    
     // NE PAS MODIFIER L'INTERFACE PUBLIC.
     // IMPLEMENTER LES METHODES SEPAREMENT
     // DANS UN FICHIER .CPP
@@ -112,21 +113,9 @@ public:
      */
     std::string getName() const;
     
-
-    size_t nbMoves() const;
 };
 
 
-/**
-	 * @brief Fonction recursive qui trouve la meilleure position a jouer dans la Grille de jeu et pour le Player p.
-	 * Utilise l'elagage Alpha-Beta si le bool UTILISER_ELAGAGE_ALPHA_BETA est true.
-	 *
-	 * @param cln, la derniere colonne dans laquelle un jeton a ete joue.
-	 * @param p, le Player pour qui on souhaite trouver la meilleure position a jouer.
-	 * @param profondeur, la profondeur de la recursion.
-	 * @param alpha minimum
-	 * @param beta maximum
-	 * @return une entier, le score qu'à obtenu la case testee.
-	 */
+
 
 #endif /* P4_h */
