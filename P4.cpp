@@ -3,6 +3,18 @@
 
 using namespace std;
 
+int random(int min, int max) //range : [min, max)
+{
+   static bool first = true;
+   if ( first ) 
+   {  
+      srand(time(NULL)); 
+      first = false;
+   }
+   return min + rand() % (max - min);
+}
+
+
 void P4::reset()
 {
     for(size_t ligne = 0; ligne < HEIGHT; ++ligne)
@@ -282,7 +294,7 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
         int bestScore = -WIDTH*HEIGHT;
 
          //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
-        size_t nextMove = rand() % WIDTH;
+        size_t nextMove = random(0,WIDTH) % WIDTH;
 
         for(size_t i = 0 ; i < WIDTH ; i++)
         {
@@ -374,8 +386,11 @@ int P4::heuristique(const Player& p)
 //                
 //                return i;
 //            }
-
-    return rand()%WIDTH;
+    int colonneAleatoire = random(0,WIDTH)%WIDTH;
+    while(!isValidMove(colonneAleatoire)){
+        colonneAleatoire = random(0, WIDTH)%WIDTH;
+    }
+    return colonneAleatoire;
 }
 
 
