@@ -6,13 +6,35 @@
 
 class P4 : public P4Interface
 {
+    /**
+     *  @brief Surcharge de << pour afficher la grille du jeu
+     *
+     *  @param std::ostream&     le flux utilise pour laffichage
+     *  @param P4& un objet de votre classe P4
+     *
+     *  @return le flux original
+    */
     friend std::ostream& operator << (std::ostream& os, const P4& p4);
- 
-    // A COMPLETER SELON VOS BESOINS EN ATTRIBUTS ET METHODES PRIVEES
+    
+private:
+        
     size_t maxJetonPerColumn[WIDTH]; // utile pour tracker le nb de jeton par colonne
-    size_t maxJetonPerLines[HEIGHT]; 
-    Player board[HEIGHT][WIDTH];
-    int nbMove = 0;
+    size_t maxJetonPerLines[HEIGHT]; // de même pour les lignes
+    Player board[HEIGHT][WIDTH];    //la grille de jeu
+    int nbMove = 0;                 //le nombre de coups joués
+    
+    
+    
+    
+    
+    /**
+     * @brief permet de calculer le score d'une colonne
+     * @param col, la colonne testée
+     * @param p, le Player courant
+     * @param depth, la profondeur de la recursion.
+     * @return un entier représentant le score de la case courante obtenue avec la colonne passée en paramètre
+     */
+    int calculeScore(size_t col, const Player& p, unsigned depth);
 
     
 public:
@@ -86,15 +108,17 @@ public:
     size_t nbMoves() const;
 };
 
-/**
- *  @brief Surcharge de << pour afficher la grille du jeu
- *
- *  @param std::ostream&     le flux utilise pour laffichage
- *  @param P4& un objet de votre classe P4
- *
- *  @return le flux original
- */
-std::ostream& operator << ( std::ostream&, const P4& );
 
+/**
+	 * @brief Fonction recursive qui trouve la meilleure position a jouer dans la Grille de jeu et pour le Player p.
+	 * Utilise l'elagage Alpha-Beta si le bool UTILISER_ELAGAGE_ALPHA_BETA est true.
+	 *
+	 * @param cln, la derniere colonne dans laquelle un jeton a ete joue.
+	 * @param p, le Player pour qui on souhaite trouver la meilleure position a jouer.
+	 * @param profondeur, la profondeur de la recursion.
+	 * @param alpha minimum
+	 * @param beta maximum
+	 * @return une entier, le score qu'à obtenu la case testee.
+	 */
 
 #endif /* P4_h */

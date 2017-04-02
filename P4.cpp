@@ -211,6 +211,14 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
     size_t bestMove = WIDTH;
     //on initialise le score à "moins l'infini"
     int bestScore = -(WIDTH * HEIGHT);
+    if(depth == 0)
+    {
+        return 0;
+    }
+    if(nbMoves() == WIDTH * HEIGHT)
+    {
+        return 0;
+    }
     
     int bestScore2Play;
 
@@ -234,6 +242,10 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
         {
             int score = calculeScore(nextMove, p, depth);
             if (score > bestScore) 
+
+            playInColumn(x,((Player)(int(p) * -1)));
+            int score = -(chooseNextMove((Player)(int(p) * -1),depth - 1));
+            if(score > bestScore)
             {
                     bestScore = score;
                     bestScore2Play = nextMove;
