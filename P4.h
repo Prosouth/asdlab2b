@@ -1,6 +1,6 @@
 #ifndef P4_h
 #define P4_h
-
+#include <limits>
 #include "P4Interface.h"
 #include <iostream>
 
@@ -18,6 +18,7 @@ class P4 : public P4Interface
     
 private:
         
+    const int MAX_INT = std::numeric_limits<int>::max();
     size_t maxJetonPerColumn[WIDTH]; // utile pour tracker le nb de jeton par colonne
     size_t maxJetonPerLines[HEIGHT]; // de même pour les lignes
     Player board[HEIGHT][WIDTH];    //la grille de jeu

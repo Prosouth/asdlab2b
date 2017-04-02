@@ -208,16 +208,11 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
 {
     static bool firstStone = true;
     size_t bestMove = WIDTH;
+    
     //on initialise le score à "moins l'infini"
     int bestScore = -(WIDTH * HEIGHT);
-    if(depth == 0)
-    {
-        return 0;
-    }
-    if(nbMoves() == WIDTH * HEIGHT)
-    {
-        return 0;
-    }
+    
+    
     
     int bestScore2Play;
 
@@ -262,11 +257,30 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     //le score de la case à retourner
     int scorePlayer;
 
-    //le cas de l'égalité -> on renvoit un score de 0
+    //on applique le mouvement donnée en paramètre
+    playInColumn(col, p);
+    
+    //si le mouvement joué gagnant alors on renvoie le score max
+    if(isWinner(p))
+    {
+        return MAX_INT;
+    }
+    //le cas de l'égalité -> on renvoie un score de 0
     if (nbMoves() == WIDTH * HEIGHT) {
         scorePlayer = 0;
     }
-
+    //on atteint la profondeur limite
+    else if(depth == 0)
+    {
+        //ON DOIT APPELER LA FONCTION HEURISTIQUE !
+        return 0;
+    }
+    //sinon, on doit calculer le score du prochain coup
+    else
+    {
+        
+    }
+    
 
     //une façon de calculer un score 
     for (size_t x = 0; x < WIDTH; x++) {
