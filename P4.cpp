@@ -265,6 +265,7 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
 {
     //le score de la case à retourner
     int scorePlayer;
+
     //on applique le mouvement donnée en paramètre
     playInColumn(col, p);
     
@@ -289,19 +290,35 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     {
         int bestScore = -WIDTH*HEIGHT;
 
-        if (isValidMove(col)) 
+         //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
+        size_t nextMove = random(0,WIDTH) % WIDTH;
+
+        for(size_t i = 0 ; i < WIDTH ; i++)
         {
-            int score = calculeScore(col, (Player)((int)p*-1), depth-1);
+            //on regarde la colonne suivante en faisant attention de ne pas dépasser WIDTH
+            nextMove = (nextMove + i)%WIDTH;
 
-            if(score > bestScore)
+            if (isValidMove(nextMove)) 
             {
-                    bestScore = score;
+                int score = calculeScore(nextMove, (Player)((int)p*-1), depth-1);
+                
+                if(score > bestScore)
+                {
+                        bestScore = score;
+                }
+               
             }
-
         }
         scorePlayer = -bestScore;
+    
     }
     
+//    //une façon de calculer un score 
+//    for (size_t x = 0; x < WIDTH; x++) {
+//        if (isValidMove(x) && isWinner(p)) {
+//            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
+//        }
+//    }
     
     //on efface le coup joué
     unPlayInColumn(col, p);
