@@ -65,7 +65,8 @@ int askNumberOfPlayers() {
 // de match humain/ordinateur. Puis boucle tant qu'il
 // n'y a pas de vainqueur et que le tableau n'est pas
 // plein. Affiche le resultat du match.
-int main() {
+int main() 
+{
 
     srand ( (int) time(0) );
     
