@@ -18,8 +18,8 @@ class P4 : public P4Interface
     
 private:
         
-    size_t maxJetonPerColumn[WIDTH]; // utile pour tracker le nb de jeton par colonne
-    size_t maxJetonPerLines[HEIGHT]; // de même pour les lignes
+    size_t maxJetonPerColumn[WIDTH] = {0,0,0,0,0,0,0}; // utile pour tracker le nb de jeton par colonne
+    size_t maxJetonPerLines[HEIGHT] = {0,0,0,0,0,0}; // de même pour les lignes
     Player board[HEIGHT][WIDTH];    //la grille de jeu
     int nbMove = 0;                 //le nombre de coups joués
     
@@ -65,7 +65,7 @@ public:
      */
     void playInColumn(size_t c, Player p);
     
-    void unPlayInColumn(size_t c, Player p);
+    void unPlayInColumn(size_t lastLine, size_t lastColumn);
    
     
     /**

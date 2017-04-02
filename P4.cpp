@@ -48,7 +48,7 @@ void P4::reset()
         maxJetonPerColumn[c]++;
         maxJetonPerLines[HEIGHT - 1]++;
         nbMove++;
-         // incrémente le nb de jetons dans cette colonne
+         // décrémente le nb de jetons dans cette colonne
     }
     else if(board[HEIGHT-2][c] == EMPTY) 
     {
@@ -87,51 +87,12 @@ void P4::reset()
     }  
  }
  
- void P4::unPlayInColumn(size_t c, Player p)
+ void P4::unPlayInColumn(size_t lastLine, size_t lastColumn)
  {    
-    if(board[HEIGHT-6][c] == p)
-    {
-        board[HEIGHT-6][c] = EMPTY;
-        maxJetonPerColumn[c]--;
-        maxJetonPerLines[HEIGHT - 1]--;
+        board[lastLine][lastColumn] = EMPTY;
+        maxJetonPerColumn[lastColumn]--;
+        maxJetonPerLines[lastLine]--;
         nbMove--;
-         // incrémente le nb de jetons dans cette colonne
-    }
-    else if(board[HEIGHT-5][c] == p) 
-    {
-       board[HEIGHT-5][c] = EMPTY;
-       maxJetonPerColumn[c]--;
-       maxJetonPerLines[HEIGHT - 5]--;
-       nbMove--;
-    }
-    else if(board[HEIGHT-4][c] == p) 
-    {
-       board[HEIGHT-4][c] = EMPTY;
-       maxJetonPerColumn[c]--;
-       maxJetonPerLines[HEIGHT - 4]--;
-       nbMove--;
-    }
-    else if(board[HEIGHT-3][c] == p) 
-    {
-       board[HEIGHT-3][c] = EMPTY;
-       maxJetonPerColumn[c]--;
-       maxJetonPerLines[HEIGHT - 3]--;
-       nbMove--;
-    }
-    else if(board[HEIGHT-2][c] == p) 
-    {
-       board[HEIGHT-2][c] = EMPTY;
-       maxJetonPerColumn[c]--;
-       maxJetonPerLines[HEIGHT - 2]--;
-       nbMove--;
-    }
-    else if(board[HEIGHT-1][c] == p) 
-    {
-       board[HEIGHT-1][c] = EMPTY;
-       maxJetonPerColumn[c]--;
-       maxJetonPerLines[HEIGHT - 1]--;
-       nbMove--;
-    }  
  }
  
 std::string P4::getName() const
@@ -268,7 +229,7 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     //si le mouvement joué gagnant alors on renvoie le score max
     if(isWinner(p))
     {
-        unPlayInColumn(col, p);
+        unPlayInColumn(HEIGHT - maxJetonPerColumn[col], col);
         return WIDTH*HEIGHT;
     }
     //le cas de l'égalité -> on renvoie un score de 0
@@ -278,7 +239,7 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     //on atteint la profondeur limite
     else if(depth == 0)
     {
-        unPlayInColumn(col, p);
+        unPlayInColumn(HEIGHT - maxJetonPerColumn[col], col);
         return heuristique(p);
     }
     //sinon, on doit calculer le score du prochain coup
@@ -307,7 +268,7 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     }
 
     //on efface le coup joué
-    unPlayInColumn(col, p);
+    unPlayInColumn(HEIGHT - maxJetonPerColumn[col], col);
 
     return scorePlayer;
 }
@@ -320,7 +281,7 @@ int P4::heuristique(const Player& p)
         return 3;
     }
     
-    //on regarde si 3 jetons d'affilés sont alignés ou si on peut gagner au prochain coup
+    //on regarde si 3 jetons d'affilés sont alignés et si on peut gagner au prochain coup ou perdre
     for(size_t i = 0; i < WIDTH; i++)
     {
         if(isValidMove(i))
@@ -328,10 +289,10 @@ int P4::heuristique(const Player& p)
             playInColumn(i,p);
             if(isWinner(p))
             {
-                unPlayInColumn(i,p);
+                unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
                 return i;
             }
-            unPlayInColumn(i,p);
+            unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
         }
     }
     
