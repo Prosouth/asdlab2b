@@ -226,7 +226,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
     
     
     
-    int bestScore2Play;
+    int bestCase2Play;
 
     //si il s'agit du premier coup joué alors on doit jouer au milieu
     if (firstStone) 
@@ -251,18 +251,15 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
             if(score > bestScore)
             {
                     bestScore = score;
-                    bestScore2Play = nextMove;
+                    bestCase2Play = nextMove;
             }
         }
-    }
-    
-    
-    return bestScore2Play;
-
+    }   
+    return bestCase2Play;
 }
 
     
-    
+  
     
 int P4::calculeScore(size_t col, const Player& p, unsigned depth) 
 {
