@@ -281,7 +281,7 @@ int P4::heuristique(const Player& p)
         return 3;
     }
     
-    //on regarde si 3 jetons d'affilés sont alignés et si on peut gagner au prochain coup ou perdre
+    //on regarde si 3 jetons d'affilés sont alignés et si on peut gagner au prochain coup
     for(size_t i = 0; i < WIDTH; i++)
     {
         if(isValidMove(i))
@@ -296,6 +296,23 @@ int P4::heuristique(const Player& p)
         }
     }
     
+    //on joue sur le coup gagnant de l'adversaire
+    for(size_t i = 0; i < WIDTH; i++)
+    {
+        if(isValidMove(i))
+        {
+            playInColumn(i,(Player((int)p*-1)));
+            if(isWinner((Player((int)p*-1))))
+            {
+                unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
+                return i;
+            }
+            unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
+        }
+    } 
+    
+    
+    //sinon on joue aléatoirement
     int colonneAleatoire = random(0,WIDTH)%WIDTH;
     while(!isValidMove(colonneAleatoire))
     {
