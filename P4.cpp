@@ -354,38 +354,10 @@ int P4::heuristique(const Player& p)
         }
         
     }
-// 
-//    //on regarde si 3 jetons d'affilés sont alignés ou si on peut gagner au prochain coup
-//    for(size_t i = 0; i < WIDTH; i++)
-//    {
-//        
-//        if(isValidMove(i))
-//        {
-//            playInColumn(i,(Player)((int)p*-1));
-//            if(isWinner((Player)((int)p*-1)))
-//            {
-//                unPlayInColumn(i,(Player)((int)p*-1));
-//                return i;
-//            }
-//            unPlayInColumn(i,(Player)((int)p*-1));
-//        }
-//        
-//    }
-//    
     
     
+
     
-    
-    
-    
-    
-//    //sinon si l'adversaire peut gagner, on doit le contrer
-//            else if(isWinner((Player)(int)p*-1))
-//            {
-//                
-//                
-//                return i;
-//            }
     int colonneAleatoire = random(0,WIDTH)%WIDTH;
     while(!isValidMove(colonneAleatoire)){
         colonneAleatoire = random(0, WIDTH)%WIDTH;
