@@ -206,11 +206,14 @@ size_t P4::nbMoves() const
 
 size_t P4::chooseNextMove(Player p, unsigned depth) 
 {
+<<<<<<< HEAD
 
     static bool firstStone = true;
     size_t bestMove = WIDTH;
     //on initialise le score à "moins l'infini"
     int bestScore = -(WIDTH * HEIGHT);
+=======
+>>>>>>> a924c7653603d89800db344e094f034d2905da17
     if(depth == 0)
     {
         return 0;
