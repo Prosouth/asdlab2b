@@ -187,9 +187,8 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
         return WIDTH / 2;
     }
   
-
     
-    //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
+    //on appelle la fonction heuristique pour déterminer la meilleure case à jouer
     size_t nextMove = heuristique(p); 
     
     for(size_t i = 0 ; i < WIDTH ; i++)
@@ -210,8 +209,7 @@ size_t P4::chooseNextMove(Player p, unsigned depth)
     }   
     return bestMove;
 }
-
-     
+   
     
 int P4::calculeScore(size_t col, const Player& p, unsigned depth, int alpha, int beta) 
 {
@@ -257,7 +255,6 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth, int alpha, int
                 {
                     bestScore = score;
                 } 
-                
                 if (ELAGAGE_ALPHA_BETA) 
                 {
                     if(score > alpha)
@@ -274,12 +271,12 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth, int alpha, int
         }
         scorePlayer = -bestScore;    
     }
-
     //on efface le coup joué
     unPlayInColumn(HEIGHT - maxJetonPerColumn[col], col);
 
     return scorePlayer;
 }
+
 
 int P4::heuristique(const Player& p) 
 {
@@ -318,8 +315,6 @@ int P4::heuristique(const Player& p)
             unPlayInColumn(HEIGHT - maxJetonPerColumn[i], i);
         }
     } 
-    
-    
     //sinon on joue aléatoirement
     int colonneAleatoire = random(0,WIDTH);
     
@@ -351,7 +346,6 @@ std::ostream& operator << ( std::ostream& os, const P4& p4)
             os << "|";          
         }
         os << "\n+-+-+-+-+-+-+-+\n";
-       
      }
      os << " 0 1 2 3 4 5 6\n";
     return os;
