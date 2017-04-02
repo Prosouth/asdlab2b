@@ -263,7 +263,8 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     //si le mouvement joué gagnant alors on renvoie le score max
     if(isWinner(p))
     {
-        return MAX_INT;
+        unPlayInColumn(col, p);
+        return WIDTH*HEIGHT;
     }
     //le cas de l'égalité -> on renvoie un score de 0
     if (nbMoves() == WIDTH * HEIGHT) {
@@ -272,26 +273,54 @@ int P4::calculeScore(size_t col, const Player& p, unsigned depth)
     //on atteint la profondeur limite
     else if(depth == 0)
     {
-        //ON DOIT APPELER LA FONCTION HEURISTIQUE !
-        return 0;
+        unPlayInColumn(col, p);
+        return heuristique(p);
     }
     //sinon, on doit calculer le score du prochain coup
     else
     {
-        
+        int bestScore = -WIDTH*HEIGHT;
+
+         //choix d'une colonne aléatoire pour faire calculer le score et entrer dans la récursion
+        size_t nextMove = rand() % WIDTH;
+
+        for(size_t i = 0 ; i < WIDTH ; i++)
+        {
+            //on regarde la colonne suivante en faisant attention de ne pas dépasser WIDTH
+            nextMove = (nextMove + i)%WIDTH;
+
+            if (isValidMove(nextMove)) 
+            {
+                int score = calculeScore(nextMove, (Player)((int)p*-1), depth-1);
+                
+                if(score > bestScore)
+                {
+                        bestScore = score;
+                }
+               
+            }
+        }
+        scorePlayer = -bestScore;
+    
     }
     
-
-    //une façon de calculer un score 
-    for (size_t x = 0; x < WIDTH; x++) {
-        if (isValidMove(x) && isWinner(p)) {
-            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
-        }
-    }
+//    //une façon de calculer un score 
+//    for (size_t x = 0; x < WIDTH; x++) {
+//        if (isValidMove(x) && isWinner(p)) {
+//            return WIDTH * HEIGHT + 1 - nbMoves() / 2;
+//        }
+//    }
+    
+    //on efface le coup joué
+    unPlayInColumn(col, p);
 
     return scorePlayer;
 }
-    
+
+int P4::heuristique(const Player& p) 
+{
+    return rand()%WIDTH;
+}
 
 
 

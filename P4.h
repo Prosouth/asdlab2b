@@ -18,14 +18,17 @@ class P4 : public P4Interface
     
 private:
         
-    const int MAX_INT = std::numeric_limits<int>::max();
     size_t maxJetonPerColumn[WIDTH]; // utile pour tracker le nb de jeton par colonne
     size_t maxJetonPerLines[HEIGHT]; // de même pour les lignes
     Player board[HEIGHT][WIDTH];    //la grille de jeu
     int nbMove = 0;                 //le nombre de coups joués
     
-    
-    
+    /**
+     * 
+     * @param p
+     * @return un entier représentant la valeur de la case jou
+     */
+    int heuristique(const Player& p);
     
     
     /**
